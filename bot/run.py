@@ -9,6 +9,7 @@ with SignIn() as bot1:
     # bot1.login_by_incorrect_password()
     # bot1.login_by_incorrect_email()
     # bot1.login_by_invalid_email()
+    # bot1.not_fill_field_login()
 
 
 # with SignUp() as bot2:

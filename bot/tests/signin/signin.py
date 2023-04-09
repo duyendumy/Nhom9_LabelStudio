@@ -55,6 +55,10 @@ class SignIn(webdriver.Chrome):
         password .send_keys("1234asdfASDF")
         login_button = self.find_element(By.CLASS_NAME,'ls-button_look_primary')
         login_button.click()
+        error = self.find_element(By.CLASS_NAME,"error")
+        text = error.text
+        if text == "The email and password you entered don't match.":
+            print("Pass")
         
     def login_by_invalid_email(self):
         email = self.find_element(By.ID,'email')
@@ -65,7 +69,25 @@ class SignIn(webdriver.Chrome):
         password .send_keys("1234")
         login_button = self.find_element(By.CLASS_NAME,'ls-button_look_primary')
         login_button.click()
+        error = self.find_element(By.CLASS_NAME,"error")
+        text = error.text
+        if text == "The email and password you entered don't match.":
+            print("Pass")
     
+    def not_fill_field_login(self):
+        email = self.find_element(By.ID,'email')
+        # Send your invalid email
+        email.send_keys("")
+        password = self.find_element(By.ID,'password')
+        # Send your invalid password
+        password .send_keys("")
+        login_button = self.find_element(By.CLASS_NAME,'ls-button_look_primary')
+        login_button.click()
+        error = self.find_element(By.CLASS_NAME,"error")
+        text = error.text
+        if text == "The email and password you entered don't match.":
+            print("Pass")
+        
     
   
         
