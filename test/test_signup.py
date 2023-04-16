@@ -61,4 +61,4 @@ class TestSingUp():
         if len(driver.find_elements(By.CLASS_NAME, "field_errors")) == 2:
             allure.attach(driver.get_screenshot_as_png(),
                               name="Invalid Authorization", attachment_type=allure.attachment_type.PNG)
-    
+        
