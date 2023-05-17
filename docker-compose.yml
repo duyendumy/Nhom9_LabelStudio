@@ -3,7 +3,7 @@ version: "3.9"
 services:
   nginx:
     build: .
-    image: heartexlabs/label-studio:latest
+    image: duyendu/label-studio:latest
     ports:
       - "8080:8085"
       - "8081:8086"
