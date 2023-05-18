@@ -22,7 +22,7 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag duyendu/group09_label_studio:latest
+      run: DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag duyendu/group09_label_studio:latest
       
     - name: Docker Push
       run: docker push ${{secrets.DOCKER_USER}}/group09_label_studio
