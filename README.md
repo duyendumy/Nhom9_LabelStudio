@@ -4,12 +4,29 @@ Label Studio is an open source data labeling tool. It lets you label data types 
 
 This project is used for testing the Label Studio application. Group 9 use Selenium to test the basic functionalities and use Allure to generate reports.
 
+#### Install locally with Docker
+
+Group 09 Label Studio docker image is [here](https://hub.docker.com/repository/docker/duyendu/group_09_label_studio).
+
+```bash
+# You can pull this docker repository
+docker pull duyendu/group_09_label_studio
+
+# Run this image after install
+docker run -it -p 8080:8080 duyendu/group_09_label_studio
+```
+
 #### Build a local image with Docker
 
 ```bash
-# Dowload zip or git clone source code
+# Download zip or git clone source code
 pip clone "https://github.com/duyendumy/Nhom9_LabelStudio.git"
 
-# To Build a local image, run
-docker build -t username/label-studio:latest .
+# To Build a local image, run:
+docker build -t yourusername/label-studio:latest .
 ```
+
+#### Deploy in a cloud instance
+
+We deploy this app to AWS Academy using Elastic Beanstalk service.
+This is domain [here](http://testlabelstudio.us-east-1.elasticbeanstalk.com/)
