@@ -1,0 +1,1 @@
+url="http://testlabelstudio.us-east-1.elasticbeanstalk.com/"

@@ -9,6 +9,7 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
+import constant
 
 
 class TestImportData():
@@ -20,7 +21,7 @@ class TestImportData():
         driver.implicitly_wait(15)
         driver.maximize_window
         driver.get("http://localhost:8080")
-        #driver.get("http://labelstudio-env.eba-pbtrgnpm.us-east-1.elasticbeanstalk.com/")
+        driver.get(constant.url)
         yield
         driver.close()
         driver.quit()

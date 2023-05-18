@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 import pytest
 import allure
+import constant
 
 class TestLogOut():
     @pytest.fixture()
@@ -13,7 +14,7 @@ class TestLogOut():
         driver.implicitly_wait(15)
         driver.maximize_window
         # driver.get("http://localhost:8080")
-        driver.get("http://labelstudio-env.eba-pbtrgnpm.us-east-1.elasticbeanstalk.com/")
+        driver.get(constant.url)
         yield
         driver.close()
         driver.quit()
