@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "duyendu/label_studio",
+    "Name": "duyendu/group_09_label_studio",
     "Update": "true"
   },
   "Ports": [
