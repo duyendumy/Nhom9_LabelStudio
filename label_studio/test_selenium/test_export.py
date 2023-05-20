@@ -19,25 +19,30 @@ class TestExportData():
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         driver.implicitly_wait(15)
         driver.maximize_window
-        driver.get("http://localhost:8080")
+        # driver.get("http://localhost:8080")
         driver.get(constant.url)
         yield
         driver.close()
         driver.quit()
+            
+    @pytest.fixture()   
+    def test_login(self, test_setup):
+        email_data = "labelstudio09@gmail.com"
+        password_data = "1234asdfASDF"
+        with allure.step("Entering a valid email " + email_data):
+            email = driver.find_element(By.ID,'email')
+            email.send_keys(email_data)
+            
+        with allure.step("Entering a valid password " + password_data):
+            password = driver.find_element(By.ID,'password')
+            password .send_keys("1234asdfASDF")
+            
+        login_button = driver.find_element(By.CLASS_NAME,'ls-button_look_primary')
+        login_button.click()
     
     @allure.description("Export JSON")  
     @allure.severity(severity_level = "CRITICAL") 
-    def test_export_json(self, test_setup):
-        email_data = "labelstudio09@gmail.com"
-        password_data = "1234asdfASDF" 
-        with allure.step("Sign in Label Studio"):
-            email = driver.find_element(By.ID,'email')
-            email.send_keys(email_data)
-            password = driver.find_element(By.ID,'password')
-            password.send_keys(password_data)                   
-            login_button = driver.find_element(By.CLASS_NAME,'ls-button_look_primary')
-            login_button.click()
-            
+    def test_export_json(self, test_login):            
         with allure.step("Select project to export"):
             list_project = driver.find_elements(By.CLASS_NAME, "ls-projects-page__link")
             list_project[0].click()
@@ -62,17 +67,7 @@ class TestExportData():
         
     @allure.description("Export JSON_MIN")  
     @allure.severity(severity_level = "CRITICAL") 
-    def test_export_json_min(self, test_setup):
-        email_data = "labelstudio09@gmail.com"
-        password_data = "1234asdfASDF" 
-        with allure.step("Sign in Label Studio"):
-            email = driver.find_element(By.ID,'email')
-            email.send_keys(email_data)
-            password = driver.find_element(By.ID,'password')
-            password.send_keys(password_data)                   
-            login_button = driver.find_element(By.CLASS_NAME,'ls-button_look_primary')
-            login_button.click()
-            
+    def test_export_json_min(self, test_login):
         with allure.step("Select project to export"):
             list_project = driver.find_elements(By.CLASS_NAME, "ls-projects-page__link")
             list_project[0].click()
@@ -100,17 +95,7 @@ class TestExportData():
             
     @allure.description("Export CSV")  
     @allure.severity(severity_level = "CRITICAL") 
-    def test_export_csv(self, test_setup):
-        email_data = "labelstudio09@gmail.com"
-        password_data = "1234asdfASDF" 
-        with allure.step("Sign in Label Studio"):
-            email = driver.find_element(By.ID,'email')
-            email.send_keys(email_data)
-            password = driver.find_element(By.ID,'password')
-            password.send_keys(password_data)                   
-            login_button = driver.find_element(By.CLASS_NAME,'ls-button_look_primary')
-            login_button.click()
-            
+    def test_export_csv(self, test_login):            
         with allure.step("Select project to export"):
             list_project = driver.find_elements(By.CLASS_NAME, "ls-projects-page__link")
             list_project[0].click()
@@ -139,17 +124,7 @@ class TestExportData():
 
     @allure.description("Export TSV")  
     @allure.severity(severity_level = "CRITICAL")        
-    def test_export_tsv(self, test_setup):
-        email_data = "labelstudio09@gmail.com"
-        password_data = "1234asdfASDF" 
-        with allure.step("Sign in Label Studio"):
-            email = driver.find_element(By.ID,'email')
-            email.send_keys(email_data)
-            password = driver.find_element(By.ID,'password')
-            password.send_keys(password_data)                   
-            login_button = driver.find_element(By.CLASS_NAME,'ls-button_look_primary')
-            login_button.click()
-            
+    def test_export_tsv(self, test_login):            
         with allure.step("Select project to export"):
             list_project = driver.find_elements(By.CLASS_NAME, "ls-projects-page__link")
             list_project[0].click()
