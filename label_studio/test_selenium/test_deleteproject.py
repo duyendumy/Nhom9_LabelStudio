@@ -12,7 +12,6 @@ class TestDeleteProject():
     def test_setup(self):
         global driver
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-        # driver = webdriver.Chrome(executable_path="D:/Cong cu va Moi truong phat trien phan mem/chromedriver/chromdriver.exe")
         driver.implicitly_wait(15)
         driver.maximize_window
         # driver.get("http://localhost:8080")
@@ -21,18 +20,24 @@ class TestDeleteProject():
         driver.close()
         driver.quit()
         
-    @allure.description("Delete project")  
-    @allure.severity(severity_level = "CRITICAL") 
-    def test_delete_project(self, test_setup):
+    @pytest.fixture()   
+    def test_login(self, test_setup):
         email_data = "labelstudio09@gmail.com"
-        password_data = "1234asdfASDF" 
-        with allure.step("Sign in Label Studio"):
+        password_data = "1234asdfASDF"
+        with allure.step("Entering a valid email " + email_data):
             email = driver.find_element(By.ID,'email')
             email.send_keys(email_data)
+            
+        with allure.step("Entering a valid password " + password_data):
             password = driver.find_element(By.ID,'password')
-            password.send_keys(password_data)                   
-            login_button = driver.find_element(By.CLASS_NAME,'ls-button_look_primary')
-            login_button.click()
+            password .send_keys("1234asdfASDF")
+            
+        login_button = driver.find_element(By.CLASS_NAME,'ls-button_look_primary')
+        login_button.click()
+        
+    @allure.description("Delete project")  
+    @allure.severity(severity_level = "CRITICAL") 
+    def test_delete_project(self, test_login):
         list_project = driver.find_elements(By.CLASS_NAME, "ls-projects-page__link")
         list_project[0].click()
         
@@ -68,16 +73,7 @@ class TestDeleteProject():
                         
     @allure.description("Cancel while deleting project")  
     @allure.severity(severity_level = "CRITICAL")         
-    def test_cancel_delete_project(self, test_setup):
-        email_data = "labelstudio09@gmail.com"
-        password_data = "1234asdfASDF" 
-        with allure.step("Sign in Label Studio"):
-            email = driver.find_element(By.ID,'email')
-            email.send_keys(email_data)
-            password = driver.find_element(By.ID,'password')
-            password.send_keys(password_data)                   
-            login_button = driver.find_element(By.CLASS_NAME,'ls-button_look_primary')
-            login_button.click()
+    def test_cancel_delete_project(self, test_login):
         list_project = driver.find_elements(By.CLASS_NAME, "ls-projects-page__link")
         list_project[0].click()
         
