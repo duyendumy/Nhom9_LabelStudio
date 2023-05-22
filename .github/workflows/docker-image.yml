@@ -20,6 +20,9 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+  - name: Set execute permission for docker-entrypoint.sh
+      run: chmod +x ./deploy/docker-entrypoint.sh
         
     - name: Build the Docker image
       run: DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag duyendu/group09_label_studio:latest
