@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 import pytest
 import allure
 import constant
@@ -9,12 +10,16 @@ import constant
 class TestSingIn():
     @pytest.fixture()
     def test_setup(self):
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
         global driver
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),chrome_options=chrome_options)
         driver.implicitly_wait(15)
         driver.maximize_window
-        # driver.get("http://localhost:8080")
-        driver.get(constant.url)
+        driver.get("http://localhost:8080")
+        # driver.get(constant.url)
         yield
         driver.close()
         driver.quit()
