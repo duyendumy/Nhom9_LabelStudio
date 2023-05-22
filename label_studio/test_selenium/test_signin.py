@@ -13,8 +13,8 @@ class TestSingIn():
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         driver.implicitly_wait(15)
         driver.maximize_window
-       # driver.get("http://localhost:8080")
-        driver.get(constant.url)
+        driver.get("http://localhost:8080")
+        # driver.get(constant.url)
         yield
         driver.close()
         driver.quit()
