@@ -27,4 +27,6 @@ jobs:
           pip install -r deploy/requirements-test.txt
 
       - name: Run Selenium tests
-        run: pytest -v -s label_studio/test_selenium/test_signin.py
+        run: |
+          cd label_studio
+          pytest -v -s test_selenium/test_signin.py
