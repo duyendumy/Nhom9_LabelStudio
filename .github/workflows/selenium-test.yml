@@ -34,7 +34,7 @@ jobs:
       - name: Run Selenium tests
         run: |
           cd label_studio
-          pytest -v -s test_selenium/test_signin.py
+          python -m pytest -v -s -U http://localhost:8080/ test_selenium/test_signin.py
           
       - name: Stop local development server
         run: |
