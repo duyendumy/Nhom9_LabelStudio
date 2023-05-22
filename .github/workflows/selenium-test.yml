@@ -25,17 +25,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install -r deploy/requirements.txt
-          
-      - name: Start local development server
-        run: |
-          cd label_studio
-          python manage.py runserver
 
       - name: Run Selenium tests
         run: |
           cd label_studio
           python -m pytest -v -s -U http://localhost:8080/ test_selenium/test_signin.py
           
-      - name: Stop local development server
-        run: |
-          pkill -f "python manage.py runserver"
+
