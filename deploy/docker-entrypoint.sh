@@ -5,7 +5,7 @@ set -e ${DEBUG:+-x}
 # Redirect all scripts output + leaving stdout to container payload.
 exec 3>&1
 
-ENTRYPOINT_PATH=/Nhom9_LabelStudio/deploy/docker-entrypoint.d
+ENTRYPOINT_PATH=/label-studio/deploy/docker-entrypoint.d
 
 exec_entrypoint() {
   if /usr/bin/find -L "$1" -mindepth 1 -maxdepth 1 -type f -print -quit 2>/dev/null | read v; then
@@ -65,10 +65,10 @@ if [ "$1" = "nginx" ]; then
   exec nginx -c $OPT_DIR/nginx/nginx.conf -e /dev/stderr
 elif [ "$1" = "label-studio-uwsgi" ]; then
   exec_entrypoint "$ENTRYPOINT_PATH/app/"
-  exec_or_wrap_n_exec uwsgi --ini /Nhom9_LabelStudio/deploy/uwsgi.ini
+  exec_or_wrap_n_exec uwsgi --ini /label-studio/deploy/uwsgi.ini
 elif [ "$1" = "label-studio-migrate" ]; then
   exec_entrypoint "$ENTRYPOINT_PATH/app-init/"
-  exec python3 /Nhom9_LabelStudio/label_studio/manage.py migrate >&3
+  exec python3 /label-studio/label_studio/manage.py migrate >&3
 else
   exec_or_wrap_n_exec "$@"
 fi
