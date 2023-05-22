@@ -1,9 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.core.utils import ChromeType
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
 import pytest
 import allure
 import constant
@@ -12,24 +10,11 @@ class TestSingIn():
     @pytest.fixture()
     def test_setup(self):
         global driver
-        chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install())
-        chrome_options = Options()
-        options = [
-        "--headless",
-        "--disable-gpu",
-        "--window-size=1920,1200",
-        "--ignore-certificate-errors",
-        "--disable-extensions",
-        "--no-sandbox",
-        "--disable-dev-shm-usage"
-        ]
-        for option in options:
-            chrome_options.add_argument(option)
-        driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         driver.implicitly_wait(15)
         driver.maximize_window
-        driver.get("http://localhost:8080")
-        # driver.get(constant.url)
+        # driver.get("http://localhost:8080")
+        driver.get(constant.url)
         yield
         driver.close()
         driver.quit()
