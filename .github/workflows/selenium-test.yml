@@ -29,4 +29,4 @@ jobs:
       - name: Run Selenium tests
         run: |
           cd label_studio
-          pytest -v -s test_selenium/test_cloudstorage.py
+          pytest -v -s test_selenium/test_signin.py
