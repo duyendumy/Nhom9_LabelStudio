@@ -34,6 +34,7 @@ class TestDeleteProject():
             
         login_button = driver.find_element(By.CLASS_NAME,'ls-button_look_primary')
         login_button.click()
+   
         
     @allure.description("Delete project")  
     @allure.severity(severity_level = "CRITICAL") 
