@@ -29,9 +29,13 @@ jobs:
       - name: Start local development server
         run: |
           cd label_studio
-          python manage.py runserver --port 8080
+          python manage.py runserver
 
       - name: Run Selenium tests
         run: |
           cd label_studio
           pytest -v -s test_selenium/test_signin.py
+          
+      - name: Stop local development server
+        run: |
+          pkill -f "python manage.py runserver"
