@@ -26,23 +26,15 @@ jobs:
           pip install -r requirements.txt
           pip install -r deploy/requirements.txt
           
-      - name: Start Server
+      - name: Run tests
         run: |
           cd label_studio
-          # Start your local server
-          python manage.py runserver 8080 &
-          
-      - name: Wait for Server to Start
-        run: sleep 30
+          python -m pytest --html=report.html -vv -n auto --self-contained-html
         
-      - name: Run Selenium tests
-        run: |
-          cd label_studio
-          pytest -v -s test_selenium/test_signin.py
-          
-      - name: Stop Server
-        run: |
-          # Stop the local server
-          lsof -ti :8080 | xargs kill
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test Report
+          path: label_studio/report.html
 
 
