@@ -13,11 +13,11 @@ pipeline {
         stage('Run Development Server') {
             steps {
                 script {
-                            dir('label_studio'){
-                                withEnv(['PYTHONIOENCODING=utf-8']){
-                                bat 'python manage.py runserver 8080'
-                                }
+                        dir('label_studio'){
+                            withEnv(['PYTHONIOENCODING=utf-8']){
+                            bat 'python manage.py runserver 8080'
                             }
+                        }
                         }
             }
         }
@@ -32,12 +32,13 @@ pipeline {
                         }
             }
         }
-        stage('Stop Django Server') {
-            steps {
-                // Find and kill the Django server process running on port 8080
-                bat 'for /f "tokens=5" %a in (\'netstat -aon ^| findstr ":8080" ^| findstr "LISTENING"\') do taskkill /F /PID %a'
-            }
-        }
         
+    }
+    
+     post {
+        always {
+            // Stop the Django development server
+            sh 'kill $(lsof -t -i:8080)'
+        }
     }
 }
