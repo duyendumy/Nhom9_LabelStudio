@@ -30,6 +30,7 @@ pipeline {
                                         sleep 30
                                         withEnv(['PYTHONIOENCODING=utf-8']){
                                         bat 'pytest -s -v test_selenium/test_signin.py'
+                                        bat "kill ${env.SERVER_PID}"
                                         }
                                     }
                                 }
@@ -37,16 +38,6 @@ pipeline {
                 }
         }
         }  
-         stage('Stop Server') {
-            steps {
-                script {
-                     dir('label_studio'){
-                    // Stop the server by killing the process using the stored process ID
-                    bat "kill ${env.SERVER_PID}"
-                     }
-                }
-            }
-        }
     }
 }
 
