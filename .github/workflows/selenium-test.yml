@@ -25,10 +25,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install -r deploy/requirements.txt
-
+          
+      - name: Start Server
+        run: |
+          cd label_studio
+          # Start your local server
+          python manage.py runserver 8080 &
+          
+      - name: Wait for Server to Start
+        run: sleep 30
+        
       - name: Run Selenium tests
         run: |
           cd label_studio
-          python -m pytest -v -s -U http://localhost:8080/ test_selenium/test_signin.py
+          pytest -v -s test_selenium/test_signin.py
           
+      - name: Stop Server
+        run: |
+          # Stop the local server
+          lsof -ti :8080 | xargs kill
+
 
