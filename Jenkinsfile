@@ -13,10 +13,12 @@ pipeline {
             steps {
                 script {
                     dir('label_studio') {
+                        withEnv(['PYTHONIOENCODING=utf-8']){
                         // Start the server and store its process ID
                         bat 'python manage.py runserver 8080'
                         // Store the process ID in an environment variable
                         env.SERVER_PROCESS_ID = serverProcess.trim()
+                        }
                     }
                 }
             }
