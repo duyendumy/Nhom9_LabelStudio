@@ -34,10 +34,12 @@ pipeline {
                 )
             }
         }
-        steps {
-        // Find and kill the Django server process running on port 8080
-        bat 'for /f "tokens=5" %a in (\'netstat -aon ^| findstr ":8080" ^| findstr "LISTENING"\') do taskkill /F /PID %a'
-    }
-}
+        stage('Stop Django Server') {
+            steps {
+                // Find and kill the Django server process running on port 8080
+                bat 'for /f "tokens=5" %a in (\'netstat -aon ^| findstr ":8080" ^| findstr "LISTENING"\') do taskkill /F /PID %a'
+            }
+        }
+        
     }
 }
