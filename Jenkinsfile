@@ -9,7 +9,9 @@ pipeline {
             }
         }
 
-        stage('Start Server') {
+        stage('Run Server and Selenium Tests') {
+        parallel{
+            stage('Start Server') {
             steps {
                 script {
                     dir('label_studio') {
@@ -22,7 +24,8 @@ pipeline {
                     }
                 }
             }
-        }
+            }
+        
 
         stage('Run Tests') {
             when {
@@ -54,5 +57,8 @@ pipeline {
                 }
             }
         }
+        
     }
+        }
+}
 }
