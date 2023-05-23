@@ -12,26 +12,24 @@ pipeline {
      
         stage('Run Development Server') {
             steps {
-                parallel(
-                    "RunServer": {
-                        script {
-                             dir('label_studio'){
-                                 withEnv(['PYTHONIOENCODING=utf-8']){
-                                    bat 'python manage.py runserver 8080'
-                                 }
-                             }
-                        }
-                    },
-                    "RunTests": {
-                        script {
+                script {
                             dir('label_studio'){
                                 withEnv(['PYTHONIOENCODING=utf-8']){
-                                    bat 'pytest -s -v test_selenium/test_signin.py'
+                                bat 'python manage.py runserver 8080'
                                 }
                             }
                         }
-                    }
-                )
+            }
+        }
+        stage('RunTests') {
+            steps {
+                  script {
+                            dir('label_studio'){
+                                withEnv(['PYTHONIOENCODING=utf-8']){
+                                bat 'pytest -s -v test_selenium/test_signin.py'
+                                }
+                            }
+                        }
             }
         }
         stage('Stop Django Server') {
