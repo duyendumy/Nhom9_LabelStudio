@@ -21,7 +21,7 @@ pipeline {
                         }
             }
         }
-        stage('RunTests') {
+        stage('Run Tests') {
             steps {
                   script {
                             dir('label_studio'){
@@ -34,7 +34,7 @@ pipeline {
         }
         
     }
-    
+
      post {
         always {
             // Stop the Django development server
