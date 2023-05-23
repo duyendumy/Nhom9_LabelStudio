@@ -37,5 +37,20 @@ pipeline {
         }
         }  
     }
+     post {
+        success {
+            // Stop the server if Selenium tests are successful
+           script {
+                                    dir('label_studio'){
+                                        withEnv(['PYTHONIOENCODING=utf-8']){
+                                        bat 'pkill -f "python manage.py runserver 8080"'
+                                        }
+                                    }
+                                }
+        }
+        failure {
+            echo 'Selenium tests failed. Server will not be stopped.'
+        }
+    }
 }
 
