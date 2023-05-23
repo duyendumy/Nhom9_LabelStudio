@@ -6,13 +6,13 @@ pipeline {
                 parallel(
                     "RunServer": {
                         script {
-                            sh 'cd label-studio'
+                            sh 'cd label_studio'
                             sh 'python manage.py runserver'
                         }
                     },
                     "RunTests": {
                         script {
-                            sh 'cd label-studio'
+                            sh 'cd label_studio'
                             sh 'pytest -s -v test_selenium/test_login.py '
                         }
                     }
