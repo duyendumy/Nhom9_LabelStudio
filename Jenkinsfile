@@ -1,6 +1,14 @@
 pipeline {
     agent any
     stages {
+   
+        stage('Install Dependencies') {
+            steps {
+                dir('deploy'){
+                     sh 'pip install -r requirements.txt'
+                }
+            }
+     
         stage('Run Development Server') {
             steps {
                 parallel(
