@@ -8,6 +8,7 @@ pipeline {
                      sh 'pip install -r requirements.txt'
                 }
             }
+        }
      
         stage('Run Development Server') {
             steps {
