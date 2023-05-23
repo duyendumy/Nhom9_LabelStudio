@@ -56,6 +56,7 @@ pipeline {
                             dir('label_studio') {
                                 withEnv(['PYTHONIOENCODING=utf-8']) {
                                     // Run Selenium tests
+                                    sleep 30
                                     bat 'pytest -s -v test_selenium/test_signin.py'
                                 }
                             }
