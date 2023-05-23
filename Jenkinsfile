@@ -1,3 +1,11 @@
+def checkServerStatus() {
+    try {
+        sh 'curl -s http://localhost:8080'
+        return true
+    } catch (Exception e) {
+        return false
+    }
+}
 pipeline {
     agent any
 
@@ -31,7 +39,11 @@ pipeline {
                             dir('label_studio') {
                                 withEnv(['PYTHONIOENCODING=utf-8']) {
                                     // Wait for the server to start
-                                    waitForHttp(url: 'http://localhost:8080', sleepTime: 20, retryInterval: 5, validResponseCodes: '200')
+                                   timeout(time: 5, unit: 'MINUTES') {
+                                        waitUntil {
+                                            return checkServerStatus()
+                                        }
+                                    }
                                 }
                             }
                         }
