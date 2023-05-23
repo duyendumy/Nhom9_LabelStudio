@@ -14,7 +14,7 @@ pipeline {
                 script {
                     dir('label_studio') {
                         // Start the server and store its process ID
-                        def serverProcess = bat(returnStdout: true, script: 'python manage.py runserver 8080!')
+                        bat 'python manage.py runserver 8080'
                         // Store the process ID in an environment variable
                         env.SERVER_PROCESS_ID = serverProcess.trim()
                     }
