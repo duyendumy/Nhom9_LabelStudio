@@ -14,43 +14,28 @@ pipeline {
                 stage('Start Server'){
                     steps {
                         script {
+                            try{
                                     dir('label_studio'){
                                         withEnv(['PYTHONIOENCODING=utf-8']){
                                         bat 'python manage.py runserver 8080'
-                                        }
-                                    }
-                                }
-                    }
-                }
-                stage('Run Tests') {
-                    steps {
-                        script {
-                                    dir('label_studio'){
                                         sleep 20
-                                        withEnv(['PYTHONIOENCODING=utf-8']){
                                         bat 'pytest -s -v test_selenium/test_signin.py'
                                         }
                                     }
-                                }
+                        } catch(Exception e){
+                              echo "Selenium tests failed: ${e.getMessage()}"
+                              throw e // Rethrow the exception to mark the build as a failure
+
+                        } finally{
+                             dir('label_studio'){
+                                        bat 'pkill -f "python manage.py runserver 8080"'
+                                    }
+                        }
+                        }
                     }
                 }
         }
         }  
-    }
-     post {
-        success {
-            // Stop the server if Selenium tests are successful
-           script {
-                                    dir('label_studio'){
-                                        withEnv(['PYTHONIOENCODING=utf-8']){
-                                        bat 'pkill -f "python manage.py runserver 8080"'
-                                        }
-                                    }
-                                }
-        }
-        failure {
-            echo 'Selenium tests failed. Server will not be stopped.'
-        }
     }
 }
 
