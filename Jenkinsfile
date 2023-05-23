@@ -39,7 +39,7 @@ pipeline {
                             dir('label_studio') {
                                 withEnv(['PYTHONIOENCODING=utf-8']) {
                                     // Wait for the server to start
-                                   timeout(time: 5, unit: 'MINUTES') {
+                                   timeout(time: 20, unit: 'MINUTES') {
                                         waitUntil {
                                             return checkServerStatus()
                                         }
