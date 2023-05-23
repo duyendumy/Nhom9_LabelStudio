@@ -31,6 +31,7 @@ jobs:
       - name: Run tests
         run: |
           cd label_studio
+          python manage.py runserver
           python -m pytest test_selenium --html=report.html -vv -n auto --self-contained-html
         
       - name: Upload Test Report
