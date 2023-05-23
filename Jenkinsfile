@@ -31,7 +31,7 @@ pipeline {
                             dir('label_studio') {
                                 withEnv(['PYTHONIOENCODING=utf-8']) {
                                     // Wait for the server to start
-                                    waitForHttp(url: 'http://localhost:8080', sleepTime: 10, retryInterval: 5, validResponseCodes: '200')
+                                    waitForHttp(url: 'http://localhost:8080', sleepTime: 20, retryInterval: 5, validResponseCodes: '200')
                                 }
                             }
                         }
