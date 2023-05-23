@@ -17,7 +17,6 @@ pipeline {
                                     dir('label_studio'){
                                         withEnv(['PYTHONIOENCODING=utf-8']){
                                         bat 'python manage.py runserver 8080'
-                                        sleep 10
                                         }
                                     }
                                 }
@@ -27,6 +26,7 @@ pipeline {
                     steps {
                         script {
                                     dir('label_studio'){
+                                        sleep 30
                                         withEnv(['PYTHONIOENCODING=utf-8']){
                                         bat 'pytest -s -v test_selenium/test_signin.py'
                                         }
