@@ -38,10 +38,20 @@ pipeline {
                         script {
                             dir('label_studio') {
                                 withEnv(['PYTHONIOENCODING=utf-8']) {
-                                    // Wait for the server to start
-                                   timeout(time: 20, unit: 'MINUTES') {
-                                        waitUntil {
-                                            return checkServerStatus()
+                                    script {
+                                        def retryInterval = 15
+                                        def maxRetries = 20
+                                        def retries = 0
+                                        boolean serverStarted = false
+
+                                        while (!serverStarted && retries < maxRetries) {
+                                            sleep retryInterval
+                                            serverStarted = checkServerStatus()
+                                            retries++
+                                        }
+
+                                        if (!serverStarted) {
+                                            error('Failed to start the server')
                                         }
                                     }
                                 }
