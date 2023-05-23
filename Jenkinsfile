@@ -29,8 +29,7 @@ pipeline {
                                         sleep 30
                                         withEnv(['PYTHONIOENCODING=utf-8']){
                                         bat 'pytest -s -v test_selenium/test_signin.py'
-                                        env.SERVER_PID = bat(script: "pgrep -f 'python manage.py runserver 8080'", returnStdout: true).trim()
-                                        bat "taskkill /F /PID ${env.SERVER_PID}"
+                                        bat 'taskkill /F /IM "python.exe" /FI "WINDOWTITLE eq manage.py runserver 8080"'
                                         }
                                     }
                                 }
