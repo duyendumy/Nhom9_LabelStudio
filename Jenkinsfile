@@ -10,37 +10,32 @@ pipeline {
         }
 
         stage('Run Server and Selenium Tests') {
-        parallel{
-            stage('Start Server') {
             steps {
-                script {
-                    dir('label_studio') {
-                        withEnv(['PYTHONIOENCODING=utf-8']){
-                        // Start the server and store its process ID
-                        bat 'python manage.py runserver 8080'
-                        // Store the process ID in an environment variable
-                        env.SERVER_PROCESS_ID = serverProcess.trim()
+                parallel(
+                    'Start Server': {
+                        script {
+                            dir('label_studio') {
+                                withEnv(['PYTHONIOENCODING=utf-8']) {
+                                    // Start the server and store its process ID
+                                    bat 'python manage.py runserver 8080'
+                                    // Store the process ID in an environment variable
+                                    env.SERVER_PROCESS_ID = serverProcess.trim()
+                                }
+                            }
+                        }
+                    },
+                    'Run Tests': {
+                        steps {
+                            script {
+                                dir('label_studio') {
+                                    sleep 30
+                                    // Run pytest
+                                    bat 'pytest -s -v test_selenium/test_signin.py'
+                                }
+                            }
                         }
                     }
-                }
-            }
-            }
-        
-
-        stage('Run Tests') {
-            when {
-                expression {
-                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
-                }
-            }
-            steps {
-                script {
-                    dir('label_studio') {
-                        sleep 30
-                        // Run pytest
-                        bat 'pytest -s -v test_selenium/test_signin.py'
-                    }
-                }
+                )
             }
         }
 
@@ -53,12 +48,9 @@ pipeline {
             steps {
                 script {
                     // Stop the server using the stored process ID
-                    bat "kill -9 ${env.SERVER_PROCESS_ID}"
+                    bat 'taskkill /F /PID ${env.SERVER_PROCESS_ID}'
                 }
             }
         }
-        
     }
-        }
-}
 }
