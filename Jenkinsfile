@@ -26,7 +26,7 @@ pipeline {
                         script {
                             dir('label_studio'){
                                 withEnv(['PYTHONIOENCODING=utf-8']){
-                                    bat 'pytest -s -v test_selenium/test_login.py'
+                                    bat 'pytest -s -v test_selenium/test_signin.py'
                                 }
                             }
                         }
@@ -34,5 +34,10 @@ pipeline {
                 )
             }
         }
+        steps {
+        // Find and kill the Django server process running on port 8080
+        bat 'for /f "tokens=5" %a in (\'netstat -aon ^| findstr ":8080" ^| findstr "LISTENING"\') do taskkill /F /PID %a'
+    }
+}
     }
 }
