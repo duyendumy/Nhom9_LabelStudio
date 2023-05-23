@@ -16,14 +16,18 @@ pipeline {
                     "RunServer": {
                         script {
                              dir('label_studio'){
-                                 bat 'python manage.py runserver 8080'
+                                 withEnv(['PYTHONIOENCODING=utf-8']){
+                                    bat 'python manage.py runserver 8080'
+                                 }
                              }
                         }
                     },
                     "RunTests": {
                         script {
                             dir('label_studio'){
-                                bat 'pytest -s -v test_selenium/test_login.py '
+                                withEnv(['PYTHONIOENCODING=utf-8']){
+                                    bat 'pytest -s -v test_selenium/test_login.py'
+                                }
                             }
                         }
                     }
