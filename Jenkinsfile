@@ -14,7 +14,7 @@ pipeline {
                 script {
                     dir('label_studio') {
                         withEnv(['PYTHONIOENCODING=utf-8']) {
-                            bat 'python manage.py runserver 8080'
+                            bat 'python manage.py runserver 8080 &'
                         }
                     }
                 }
