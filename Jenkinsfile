@@ -33,32 +33,6 @@ pipeline {
                     }
                 }
 
-                stage('Wait for Server') {
-                    steps {
-                        script {
-                            dir('label_studio') {
-                                withEnv(['PYTHONIOENCODING=utf-8']) {
-                                    script {
-                                        def retryInterval = 15
-                                        def maxRetries = 10
-                                        def retries = 0
-                                        boolean serverStarted = false
-
-                                        while (!serverStarted && retries < maxRetries) {
-                                            sleep retryInterval
-                                            serverStarted = checkServerStatus()
-                                            retries++
-                                        }
-
-                                        if (!serverStarted) {
-                                            error('Failed to start the server')
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
 
                 stage('Run Tests') {
                     steps {
