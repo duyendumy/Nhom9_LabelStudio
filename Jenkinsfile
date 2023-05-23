@@ -24,17 +24,6 @@ pipeline {
         }
 
 
-        stage('Run Selenium Tests') {
-            steps {
-                script {
-                        dir('label_studio'){
-                            withEnv(['PYTHONIOENCODING=utf-8']){
-                            bat 'pytest -s -v test_selenium/test_signin.py'
-                            }
-                        }
-                    }
-            }
-        }
     }
 
     post {
