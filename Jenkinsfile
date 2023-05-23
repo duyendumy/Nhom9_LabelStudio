@@ -9,29 +9,32 @@ pipeline {
             }
         }
      
-        stage('Run Development Server') {
-            steps {
-                script {
-                        dir('label_studio'){
-                            withEnv(['PYTHONIOENCODING=utf-8']){
-                            bat 'python manage.py runserver 8080'
-                            sleep 10
-                            }
-                        }
-                        }
-            }
-        }
-        stage('Run Tests') {
-            steps {
-                  script {
-                            dir('label_studio'){
-                                withEnv(['PYTHONIOENCODING=utf-8']){
-                                bat 'pytest -s -v test_selenium/test_signin.py'
+        stage('Run Server and Selenium Tests') {
+            parallel {
+                stage('Start Server'){
+                    steps {
+                        script {
+                                    dir('label_studio'){
+                                        withEnv(['PYTHONIOENCODING=utf-8']){
+                                        bat 'python manage.py runserver 8080'
+                                        sleep 10
+                                        }
+                                    }
                                 }
-                            }
-                        }
-            }
+                    }
+                }
+                stage('Run Tests') {
+                    steps {
+                        script {
+                                    dir('label_studio'){
+                                        withEnv(['PYTHONIOENCODING=utf-8']){
+                                        bat 'pytest -s -v test_selenium/test_signin.py'
+                                        }
+                                    }
+                                }
+                    }
+                }
         }
-        
+        }  
     }
 }
