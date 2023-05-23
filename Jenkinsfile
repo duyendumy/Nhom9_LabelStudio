@@ -40,7 +40,7 @@ pipeline {
                                 withEnv(['PYTHONIOENCODING=utf-8']) {
                                     script {
                                         def retryInterval = 15
-                                        def maxRetries = 2
+                                        def maxRetries = 10
                                         def retries = 0
                                         boolean serverStarted = false
 
