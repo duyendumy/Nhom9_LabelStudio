@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-   
+
         stage('Install Dependencies') {
             steps {
                 dir('deploy'){
@@ -15,7 +15,7 @@ pipeline {
                 script {
                         dir('label_studio'){
                             withEnv(['PYTHONIOENCODING=utf-8']){
-                            bat 'python manage.py runserver 8080'
+                            bat 'JENKINS_NODE_COOKIE=dontKillMe  python manage.py runserver 8080'
                             }
                         }
                         }
@@ -33,12 +33,5 @@ pipeline {
             }
         }
         
-    }
-
-     post {
-        always {
-            // Stop the Django development server
-            sh 'kill $(lsof -t -i:8080)'
-        }
     }
 }
