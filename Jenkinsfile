@@ -1,24 +1,6 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:dind'
-            args '--privileged --group-add docker'
-        }
-    }
-
-    environment {
-    DOCKERHUB_CREDENTIALS = credentials('duyendu-dockerhub')
-     }
+    agent any
     stages {
-
-        stage('Build image') {
-            steps {      
-                    bat 'docker build -t duyendu/group09_label_studio:latest .'
-                    bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    bat 'docker push duyendu/group09_label_studio:latest'
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 dir('deploy') {
@@ -33,16 +15,27 @@ pipeline {
                     withEnv(['PYTHONIOENCODING=utf-8']) {
                     bat 'start /B python manage.py runserver 8080'
                     sleep 50
-                    bat 'pytest -s -v test_selenium/test_signin.py'
-
-                   
-            }
+                    bat 'pytest -s -v test_selenium/test_signin.py --alluredir=allure_reports'        
+                }
                }
-        }
+            }
         }
 
+        stage('reports') {
+            steps {
+                script {
+                    allure([
+                        includeProperties: false,
+                        jdk: '',
+                        properties: [],
+                        reportBuildPolicy: 'ALWAYS',
+                        results: [[path: 'allure_reports']]
+                    ])
+                }
+            }
+        }
 
-     
+        
 
     }
 }
