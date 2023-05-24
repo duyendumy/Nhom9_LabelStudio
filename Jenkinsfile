@@ -4,7 +4,7 @@ pipeline {
 
         stage('Build image') {
             steps {
-                withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
+                withDockerRegistry(credentialsId: 'docker-hub-1', url: 'https://index.docker.io/v1/') {
                     bat 'docker build -t duyendu/group09_label_studio:latest .'
                     bat 'docker push duyendu/group09_label_studio:latest'
                 }
