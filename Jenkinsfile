@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3.8.4'  // Use a Docker image as the Jenkins agent
-            args '-v /var/run/docker.sock:/var/run/docker.sock'  // Mount Docker socket
+            image 'docker:stable'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
