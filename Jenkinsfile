@@ -14,9 +14,9 @@ pipeline {
             steps {
                dir('label_studio'){
                     withEnv(['PYTHONIOENCODING=utf-8']) {
-                    def serverProcess = bat(script: 'python manage.py runserver 8080', returnStdout: true, background: true)
+                    bat 'python manage.py runserver 8080'
                     sleep(time: 10, unit: 'SECONDS')
-                    bat(script: "kill ${serverProcess}")
+                    bat 'taskkill /F /PID $(netstat -ano | findstr :8080 | awk "{print $5}")'
             }
                }
         }
