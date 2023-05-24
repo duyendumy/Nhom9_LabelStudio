@@ -1,32 +1,32 @@
-name: Docker Image CI
+# name: Docker Image CI
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
 
-jobs:
+# jobs:
 
-  build:
+#   build:
 
-    runs-on: ubuntu-latest
+#     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v3
-    - name: Login to Docker Hub
-      env: 
-        DOCKER_USER: ${{secrets.DOCKER_USER}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run:
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: Login to Docker Hub
+#       env:
+#         DOCKER_USER: ${{secrets.DOCKER_USER}}
+#         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+#       run:
+#         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-    - name: Set execute permission for docker-entrypoint.sh
-      run: chmod +x ./deploy/docker-entrypoint.sh
-        
-    - name: Build the Docker image
-      run: DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag duyendu/group09_label_studio:latest
-      
-    - name: Docker Push
-      run: docker push ${{secrets.DOCKER_USER}}/group09_label_studio
-    
+#     - name: Set execute permission for docker-entrypoint.sh
+#       run: chmod +x ./deploy/docker-entrypoint.sh
+
+#     - name: Build the Docker image
+#       run: DOCKER_BUILDKIT=1 docker build . --file Dockerfile --tag duyendu/group09_label_studio:latest
+
+#     - name: Docker Push
+#       run: docker push ${{secrets.DOCKER_USER}}/group09_label_studio
+

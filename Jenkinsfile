@@ -4,13 +4,22 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
+                withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
+                    bat 'docker build -t duyendu/group09_label_studio:latest .'
+                    bat 'docker push duyendu/group09_label_studio:latest'
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
                 dir('deploy') {
                     bat 'pip install -r requirements.txt'
                 }
             }
         }
 
-        stage('Start Local Server') {
+        stage('Test Selenium') {
             steps {
                dir('label_studio'){
                     withEnv(['PYTHONIOENCODING=utf-8']) {
