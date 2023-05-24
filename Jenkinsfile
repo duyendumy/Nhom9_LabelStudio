@@ -1,10 +1,21 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'maven:3.8.4'  // Use a Docker image as the Jenkins agent
+            args '-v /var/run/docker.sock:/var/run/docker.sock'  // Mount Docker socket
+        }
+    }
+
+    environment {
+    DOCKERHUB_CREDENTIALS = credentials('duyendu-dockerhub')
+     }
     stages {
 
         stage('Build image') {
             steps {         
-                    bat 'docker-compose -f docker-image.yml up -d'
+                    bat 'docker build -t duyendu/group09_label_studio:latest .'
+                    bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    bat 'docker push duyendu/group09_label_studio:latest'
             }
         }
 
