@@ -1,13 +1,16 @@
 pipeline {
     agent any
+
+    environment {
+    DOCKERHUB_CREDENTIALS = credentials('duyendu-dockerhub')
+     }
     stages {
 
         stage('Build image') {
-            steps {
-                withDockerRegistry(credentialsId: 'docker-hub-1', url: 'https://index.docker.io/v1/') {
+            steps {         
                     bat 'docker build -t duyendu/group09_label_studio:latest .'
+                    bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     bat 'docker push duyendu/group09_label_studio:latest'
-                }
             }
         }
 
