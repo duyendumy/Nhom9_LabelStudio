@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'docker:stable'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
+            image 'docker:dind'
+            args '--privileged --group-add docker'
         }
     }
 
@@ -12,7 +12,7 @@ pipeline {
     stages {
 
         stage('Build image') {
-            steps {         
+            steps {      
                     bat 'docker build -t duyendu/group09_label_studio:latest .'
                     bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     bat 'docker push duyendu/group09_label_studio:latest'
