@@ -2,7 +2,7 @@ pipeline {
     agent any
     stages {
 
-        stage('Install Dependencies') {
+        stage('Build image') {
             steps {
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
                     bat 'docker build -t duyendu/group09_label_studio:latest .'
