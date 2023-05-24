@@ -10,12 +10,8 @@ import constant
 class TestSingIn():
     @pytest.fixture()
     def test_setup(self):
-        chrome_options = Options()
-        chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--disable-dev-shm-usage')
         global driver
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),chrome_options=chrome_options)
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         driver.implicitly_wait(15)
         driver.maximize_window
         driver.get("http://localhost:8080")
@@ -23,6 +19,7 @@ class TestSingIn():
         yield
         driver.close()
         driver.quit()
+    
         
     @allure.description("Validate Label Studio with valid login credentials")  
     @allure.severity(severity_level = "CRITICAL")  

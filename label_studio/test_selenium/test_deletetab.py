@@ -7,7 +7,7 @@ import pytest
 import allure
 import constant
 
-class TestDeleteProject():
+class TestDeleteTab():
     @pytest.fixture()
     def test_setup(self):
         global driver
@@ -36,9 +36,9 @@ class TestDeleteProject():
         login_button.click()
    
         
-    @allure.description("Delete project")  
+    @allure.description("Delete All Tabs")  
     @allure.severity(severity_level = "CRITICAL") 
-    def test_delete_project(self, test_login):
+    def test_delete_all_tabs(self, test_login):
         list_project = driver.find_elements(By.CLASS_NAME, "ls-projects-page__link")
         list_project[0].click()
         
@@ -53,28 +53,23 @@ class TestDeleteProject():
                 if item.text == "Danger Zone":
                     item.click()
                     break
-        
-        list_main_menu_button = driver.find_elements(By.CLASS_NAME, "ls-button_look_danger")
-        for item in list_main_menu_button:
-            driver.implicitly_wait(5)
-            if item.text == "Delete Project":
-                item.click()
-                break
+        with allure.step("Click Drop All Tabs"): 
+            list_main_menu_button = driver.find_elements(By.CLASS_NAME, "ls-button_look_danger")
+            for item in list_main_menu_button:
+                driver.implicitly_wait(5)
+                if item.text == "Drop All Tabs":
+                    item.click()
+                    break
         
         with allure.step("Click Proceed"):  
             driver.implicitly_wait(5)
-            if driver.find_element(By.CLASS_NAME, "ls-modal__body"):
-                driver.implicitly_wait(15)
-                list_button = driver.find_elements(By.CLASS_NAME, "ls-button")
-                print(len(list_button))
-                for button in list_button:
-                    print(button.text)
-                    if button.text == "Proceed":
-                        button.click()
+            proceed_btn =  driver.find_element(By.XPATH, '//div[contains(@class,"ls-space ls-space_direction_horizontal ls-space_align_end")]/button[contains(@class,"ls-button ls-button_size_compact ls-button_look_destructive")]')
+            proceed_btn.click()  
+                            
                         
     @allure.description("Cancel while deleting project")  
     @allure.severity(severity_level = "CRITICAL")         
-    def test_cancel_delete_project(self, test_login):
+    def test_cancel_delete_all_tabs(self, test_login):
         list_project = driver.find_elements(By.CLASS_NAME, "ls-projects-page__link")
         list_project[0].click()
         
@@ -89,25 +84,18 @@ class TestDeleteProject():
                 if item.text == "Danger Zone":
                     item.click()
                     break
-        
-        list_main_menu_button = driver.find_elements(By.CLASS_NAME, "ls-button_look_danger")
-        for item in list_main_menu_button:
-            driver.implicitly_wait(5)
-            if item.text == "Delete Project":
-                item.click()
-                break
+        with allure.step("Click Drop All Tabs"): 
+            list_main_menu_button = driver.find_elements(By.CLASS_NAME, "ls-button_look_danger")
+            for item in list_main_menu_button:
+                driver.implicitly_wait(5)
+                if item.text == "Drop All Tabs":
+                    item.click()
+                    break
         
         with allure.step("Click Cancel"):  
             driver.implicitly_wait(5)
-            if driver.find_element(By.CLASS_NAME, "ls-modal__body"):
-                driver.implicitly_wait(15)
-                list_button = driver.find_elements(By.CLASS_NAME, "ls-button")
-                print(len(list_button))
-                for button in list_button:
-                    print(button.text)
-                    if button.text == "Cancel":
-                        button.click()
-                
+            cancel_button =  driver.find_element(By.XPATH, '//div[contains(@class,"ls-space ls-space_direction_horizontal ls-space_align_end")]/button[contains(@class,"ls-button ls-button_size_compact ls-button_look_")]')
+            cancel_button.click()  
                             
                             
             

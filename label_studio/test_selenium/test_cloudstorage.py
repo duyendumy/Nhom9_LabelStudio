@@ -14,9 +14,8 @@ class TestCloudStorage():
     def test_setup(self):
         global driver
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-        # driver = webdriver.Chrome(executable_path="D:/Cong cu va Moi truong phat trien phan mem/chromedriver/chromdriver.exe")
         driver.implicitly_wait(15)
-        # driver.maximize_window
+        driver.maximize_window
         driver.get("http://localhost:8080")
         # driver.get(constant.url)
         yield
