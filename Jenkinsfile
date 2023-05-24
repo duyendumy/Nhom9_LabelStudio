@@ -16,7 +16,7 @@ pipeline {
                     withEnv(['PYTHONIOENCODING=utf-8']) {
                     bat 'start /B python manage.py runserver 8080'
                     sleep(time: 10, unit: 'SECONDS')
-                    bat 'taskkill /F /PID $(netstat -ano | findstr :8080 | awk "{print $5}")'
+                   
             }
                }
         }
