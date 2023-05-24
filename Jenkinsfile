@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'linux'}
+    agent {label 'ubuntu'}
 
     environment {
     DOCKERHUB_CREDENTIALS = credentials('duyendu-dockerhub')
