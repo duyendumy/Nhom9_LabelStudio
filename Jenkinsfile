@@ -14,9 +14,9 @@ pipeline {
             steps {
                dir('label_studio'){
                     withEnv(['PYTHONIOENCODING=utf-8']) {
-                    def serverProcess = sh(script: 'python manage.py runserver 8080', returnStdout: true, background: true)
+                    def serverProcess = bat(script: 'python manage.py runserver 8080', returnStdout: true, background: true)
                     sleep(time: 10, unit: 'SECONDS')
-                    sh(script: "kill ${serverProcess}")
+                    bat(script: "kill ${serverProcess}")
             }
                }
         }
