@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Install Dependencies From Main Branch') {
+        stage('Install Dependencies From Staging Branch') {
             steps {
                 dir('deploy') {
                     bat 'pip install -r requirements.txt'
