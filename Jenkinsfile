@@ -19,7 +19,20 @@ pipeline {
                 }
                }
             }
-        }  
+        } 
+        stage('reports') {
+            steps {
+            script {
+                    allure([
+                            includeProperties: false,
+                            jdk: '',
+                            properties: [],
+                            reportBuildPolicy: 'ALWAYS',
+                            results: [[path: 'label_studio/allure_reports']]
+                    ])
+            }
+            }
+        } 
 
     }
 }
