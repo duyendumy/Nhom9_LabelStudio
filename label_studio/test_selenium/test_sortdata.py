@@ -108,6 +108,19 @@ class TestSortData():
                     print("Choose Upload filename")
                     break
                 
+    allure.description("By Storage filename")  
+    @allure.severity(severity_level = "CRITICAL") 
+    def test_sort_data_by_storage_filename(self, test_sort_data):
+        settings_button =  driver.find_element(By.XPATH, '//div[contains(@class,"dm-button-group dm-button-group_collapsed")]/button[contains(@class,"dm-button dm-button_size_medium dm-dropdown__trigger")]')
+        settings_button.click()
+        with allure.step("Choose Storage filename"):
+            order_by = driver.find_elements(By.CLASS_NAME,"dm-space_direction_horizontal")
+            for item in order_by:
+                if item.text == "Storage filename":
+                    item.click()
+                    print("Choose Storage filename")
+                    break
+                
     @allure.description("By Updated at")  
     @allure.severity(severity_level = "CRITICAL") 
     def test_sort_data_by_updated_at(self, test_sort_data):
@@ -119,5 +132,18 @@ class TestSortData():
                 if item.text == "Updated at":
                     item.click()
                     print("Choose Updated at")
+                    break
+                
+    @allure.description("By Updated by")  
+    @allure.severity(severity_level = "CRITICAL") 
+    def test_sort_data_by_updated_by(self, test_sort_data):
+        settings_button =  driver.find_element(By.XPATH, '//div[contains(@class,"dm-button-group dm-button-group_collapsed")]/button[contains(@class,"dm-button dm-button_size_medium dm-dropdown__trigger")]')
+        settings_button.click()
+        with allure.step("Choose Updated by"):
+            order_by = driver.find_elements(By.CLASS_NAME,"dm-space_direction_horizontal")
+            for item in order_by:
+                if item.text == "Updated by":
+                    item.click()
+                    print("Choose Updated by")
                     break
         
