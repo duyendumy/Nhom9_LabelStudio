@@ -15,12 +15,12 @@ pipeline {
                     withEnv(['PYTHONIOENCODING=utf-8']) {
                     bat 'start /B python manage.py runserver 8080'
                     sleep 100
-                    bat 'pytest -s -v test_selenium/test_signin.py'        
+                    bat 'pytest -s -v test_selenium/test_signin.py --alluredir=allure_reports'        
                 }
                }
             }
         } 
-        stage('reports') {
+        stage('Release allure reports ') {
             steps {
             script {
                     allure([
