@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Install Dependencies') {
+        stage('Install Dependencies From Main Branch') {
             steps {
                 dir('deploy') {
                     bat 'pip install -r requirements.txt'
@@ -14,11 +14,25 @@ pipeline {
                dir('label_studio'){
                     withEnv(['PYTHONIOENCODING=utf-8']) {
                     bat 'start /B python manage.py runserver 8080'
-                    sleep 50
-                    bat 'pytest -s -v test_selenium/test_signin.py'        
+                    sleep 100
+                    bat 'pytest -s -v test_selenium/test_signin.py --alluredir=allure_reports'        
                 }
                }
             }
-        }
+        } 
+        stage('Release allure reports ') {
+            steps {
+            script {
+                    allure([
+                            includeProperties: false,
+                            jdk: '',
+                            properties: [],
+                            reportBuildPolicy: 'ALWAYS',
+                            results: [[path: 'label_studio/allure_reports']]
+                    ])
+            }
+            }
+        } 
+
     }
 }
