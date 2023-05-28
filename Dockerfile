@@ -80,6 +80,6 @@ ENV HOME=/label-studio
 EXPOSE 8080
 
 USER 1001
-
+RUN chmod +x deploy/docker-entrypoint.sh
 ENTRYPOINT ["./deploy/docker-entrypoint.sh"]
 CMD ["label-studio"]
