@@ -25,7 +25,13 @@ docker run -it -p 8080:8080 duyendu/group_09_label_studio
 pip clone "https://github.com/duyendumy/Nhom9_LabelStudio.git"
 
 # To Build a local image, run:
-docker build -t yourusername/label-studio:latest .
+docker-compose build
+
+# List docker images, run:
+docker images
+
+# Run this image after install
+docker run -it -p 8080:8080 duyendu/group09_label_studio
 ```
 
 #### Deploy in a cloud instance
